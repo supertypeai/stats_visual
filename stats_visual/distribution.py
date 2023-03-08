@@ -205,7 +205,7 @@ class BinomialDist(_DiscreteDist):
         fig = super().plot_dist(title)
         return fig
 
-    def calc_pmf(self, k: int, plot=True):
+    def calc_pmf(self, k: int, plot: bool = True):
         """Calculate the probability mass function for a binomial distribution and optionally plot the distribution
         Args:
             k (int): number of successes
@@ -232,7 +232,7 @@ class BinomialDist(_DiscreteDist):
             fig = super()._highlight_pmf(fig, k, pmf, add_title)
             return fig
 
-    def calc_cum_p(self, k: int, plot=True):
+    def calc_cum_p(self, k: int, plot: bool = True):
         """Calculate the cumulative probability for a binomial distribution and optionally plot the distribution
         Args:
             k (int): number of successes
@@ -327,7 +327,7 @@ class PoissonDist(_DiscreteDist):
         fig = super().plot_dist(title)
         return fig
 
-    def calc_pmf(self, k: int, plot=True):
+    def calc_pmf(self, k: int, plot: bool =True):
         """Calculate the probability mass function for a poisson distribution and optionally plot the distribution
         Args:
             k (int): number of occurences
@@ -352,7 +352,7 @@ class PoissonDist(_DiscreteDist):
             fig = super()._highlight_pmf(fig, k, pmf, add_title)
             return fig
 
-    def calc_cum_p(self, k: int, plot=True):
+    def calc_cum_p(self, k: int, plot: bool =True):
         """Calculate the cumulative probability for a poisson distribution and optionally plot the distribution
         Args:
             k (int): number of occurences
@@ -456,7 +456,7 @@ class _ContinuousDist:
         """Placeholder for calc_cum_p"""
         pass
 
-    def _highlight_cum_p(self, fig, x: float, cum_p: "float", add_title: str):
+    def _highlight_cum_p(self, fig, x: float, cum_p: float, add_title: str):
         """Highlight the cumulative probability at x
         Args:
             fig (plotly.graph_objects.Figure): plot of the distribution
@@ -561,7 +561,7 @@ class NormalDist(_ContinuousDist):
         fig = super().plot_dist(title)
         return fig
 
-    def calc_pdf(self, x: float, plot=True):
+    def calc_pdf(self, x: float, plot: bool =True):
         """Calculate the probability density function for a normal distribution and optionally plot the distribution
         Args:
             x (float): value of x
@@ -580,7 +580,7 @@ class NormalDist(_ContinuousDist):
             fig = super()._highlight_pdf(fig, x, pdf, add_title)
             return fig
 
-    def calc_cum_p(self, x: float, plot=True):
+    def calc_cum_p(self, x: float, plot: bool =True):
         """Calculate the cumulative probability for a normal distribution and optionally plot the distribution
         Args:
             x (float): value of x
@@ -642,7 +642,7 @@ class StudentsTDist(_ContinuousDist):
         return self._df
 
     @df.setter
-    def df(self, new_df):
+    def df(self, new_df: int):
         """Set a new degree of freedom for the Student's t distribution
         Args:
             new_df (int): new degree of freedom of the Student's t distribution
@@ -668,7 +668,7 @@ class StudentsTDist(_ContinuousDist):
         fig = super().plot_dist(title)
         return fig
 
-    def calc_pdf(self, x: float, plot=True):
+    def calc_pdf(self, x: float, plot: bool = True):
         """Calculate the probability density function for a Student's t distribution and optionally plot the distribution
         Args:
             x (float): value of x
@@ -687,7 +687,7 @@ class StudentsTDist(_ContinuousDist):
             fig = super()._highlight_pdf(fig, x, pdf, add_title)
             return fig
 
-    def calc_cum_p(self, x: float, plot=True):
+    def calc_cum_p(self, x: float, plot: bool = True):
         """Calculate the cumulative probability for a Student's t distribution and optionally plot the distribution
         Args:
             x (float): value of x
