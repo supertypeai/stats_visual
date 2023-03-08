@@ -60,20 +60,26 @@ class _DiscreteDist:
         Returns:
             plotly.graph_objects.Figure: plot of the distribution
         """
-        fig = px.bar(x=self._x_vals, y=self._y_vals, title=title, labels={"x": "K", "y": "Probability"})
+        fig = px.bar(
+            x=self._x_vals,
+            y=self._y_vals,
+            title=title,
+            labels={"x": "K", "y": "Probability"},
+        )
         fig.update_traces(hovertemplate="P(K = %{x}) = %{y:.5f}<extra></extra>")
         return fig
-    
+
     def calc_pmf(self):
         """Placeholder for calc_pmf"""
         pass
-    
+
     def _highlight_pmf(self, fig, k: int, pmf: float, add_title: str):
         """Highlight the probability mass function at k
         Args:
             fig (plotly.graph_objects.Figure): plot of the distribution
             k (int): number of successes
             pmf (float): probability mass function at k
+            add_title (str): text to be appended to the existing plot title
         Returns:
             plotly.graph_objects.Figure: plot of the distribution with the probability mass function at k highlighted
         """
@@ -85,17 +91,18 @@ class _DiscreteDist:
         # Edit the title of the figure
         fig.layout.title.text += add_title
         return fig
-        
+
     def calc_cum_p(self):
         """Placeholder for calc_cum_p"""
         pass
-    
+
     def _highlight_cum_p(self, fig, k: int, cum_p: float, add_title: str):
         """Highlight the cumulative probability at k
         Args:
             fig (plotly.graph_objects.Figure): plot of the distribution
             k (int): number of successes
             cum_p (float): cumulative probability, P(K <= k)
+            add_title (str): text to be appended to the existing plot title
         Returns:
             plotly.graph_objects.Figure: plot of the distribution with cumulative probability at k highlighted
         """
@@ -111,7 +118,7 @@ class _DiscreteDist:
     def _calc_x_limit(self):
         """Placeholder for _calc_x_limit"""
         pass
-    
+
     def __repr__(self):
         """Returns the representation of the class
         Returns:
@@ -186,7 +193,7 @@ class BinomialDist(_DiscreteDist):
         self._p = new_p
         # Set the x and y values for the probability distribution
         super().__init__()
-        
+
     def plot_dist(self):
         """Plot the probability distribution for a binomial distribution
         Returns:
@@ -197,7 +204,7 @@ class BinomialDist(_DiscreteDist):
         )
         fig = super().plot_dist(title)
         return fig
-    
+
     def calc_pmf(self, k: int, plot=True):
         """Calculate the probability mass function for a binomial distribution and optionally plot the distribution
         Args:
@@ -210,7 +217,9 @@ class BinomialDist(_DiscreteDist):
         """
         if k < 0 or k > self._n:
             raise AssertionError(
-                "the number of successes (k) should be between 0 and {} (n)".format(self._n)
+                "the number of successes (k) should be between 0 and {} (n)".format(
+                    self._n
+                )
             )
         pmf = stats.binom.pmf(k=k, n=self._n, p=self._p)
         if plot == False:
@@ -218,7 +227,7 @@ class BinomialDist(_DiscreteDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>P(K = {}) = {:.5f}</b></span>".format(
-            k, pmf
+                k, pmf
             )
             fig = super()._highlight_pmf(fig, k, pmf, add_title)
             return fig
@@ -235,7 +244,9 @@ class BinomialDist(_DiscreteDist):
         """
         if k < 0 or k > self._n:
             raise AssertionError(
-                "the number of successes (k) should be between 0 and {} (n)".format(self._n)
+                "the number of successes (k) should be between 0 and {} (n)".format(
+                    self._n
+                )
             )
         cum_p = stats.binom.cdf(k=k, n=self._n, p=self._p)
         if plot == False:
@@ -247,7 +258,7 @@ class BinomialDist(_DiscreteDist):
             )
             fig = super()._highlight_cum_p(fig, k, cum_p, add_title)
             return fig
-    
+
     def _calc_x_limit(self):
         """Calculate the x-axis upper limit for the distribution
         Returns:
@@ -304,7 +315,7 @@ class PoissonDist(_DiscreteDist):
         self._mu = new_mu
         # Set the x and y values for the probability distribution
         super().__init__()
-    
+
     def plot_dist(self):
         """Plot the probability distribution for a poisson distribution
         Returns:
@@ -336,7 +347,7 @@ class PoissonDist(_DiscreteDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>P(K = {}) = {:.5f}</b></span>".format(
-            k, pmf
+                k, pmf
             )
             fig = super()._highlight_pmf(fig, k, pmf, add_title)
             return fig
@@ -360,7 +371,7 @@ class PoissonDist(_DiscreteDist):
             return cum_p
         elif plot == True:
             fig = self.plot_dist()
-            add_title =  ", <span style='color:#FF7F0E'><b>P(K <= {}) = {:.5f}</b></span>".format(
+            add_title = ", <span style='color:#FF7F0E'><b>P(K <= {}) = {:.5f}</b></span>".format(
                 k, cum_p
             )
             fig = super()._highlight_cum_p(fig, k, cum_p, add_title)
@@ -376,7 +387,7 @@ class PoissonDist(_DiscreteDist):
         while self.calc_pmf(k, plot=False) > 0.001:
             k += 1
         return k - 1
-    
+
     def __repr__(self):
         """Returns the representation of the class
         Returns:
@@ -404,8 +415,10 @@ class _ContinuousDist:
             plotly.graph_objects.Figure: plot of the distribution
         """
         fig = px.line(
-            x=self._x_vals, y=self._y_vals, labels={"x":"X", "y": "Probability Density"}, 
-            title=title
+            x=self._x_vals,
+            y=self._y_vals,
+            labels={"x": "X", "y": "Probability Density"},
+            title=title,
         )
         fig.update_yaxes(rangemode="tozero")
         fig.update_traces(hovertemplate="F(X = %{x:.3f}) = %{y:.5f}<extra></extra>")
@@ -414,17 +427,18 @@ class _ContinuousDist:
     def calc_pdf(self):
         """Placeholder for calc_pdf"""
         pass
-    
+
     def _highlight_pdf(self, fig, x: float, pdf: float, add_title: str):
         """Highlight the probability density function at x
         Args:
             fig (plotly.graph_objects.Figure): plot of the distribution
             x (float): value of x
             pdf (float): probability density function at x
+            add_title (str): text to be appended to the existing plot title
         Returns:
             plotly.graph_objects.Figure: plot of the distribution with the probability density function at x highlighted
         """
-        # Highlight the probability density function at x by adding a orange marker 
+        # Highlight the probability density function at x by adding a orange marker
         fig.add_scatter(
             x=[x],
             y=[pdf],
@@ -437,17 +451,18 @@ class _ContinuousDist:
         # Edit the figure title
         fig.layout.title.text += add_title
         return fig
-    
+
     def calc_cum_p(self):
         """Placeholder for calc_cum_p"""
         pass
-    
+
     def _highlight_cum_p(self, fig, x: float, cum_p: "float", add_title: str):
         """Highlight the cumulative probability at x
         Args:
             fig (plotly.graph_objects.Figure): plot of the distribution
             x (float): value of x
             cum_p (float): cumulative probability at x
+            add_title (str): text to be appended to the existing plot title
         Returns:
             plotly.graph_objects.Figure or float: plot of the distribution with cumulative probability at x highlighted or cumulative probability at x
         """
@@ -534,7 +549,7 @@ class NormalDist(_ContinuousDist):
         self._sigma = new_sigma
         # Set the x and y values for the probability distribution
         super().__init__()
-    
+
     def plot_dist(self):
         """Plot the probability distribution for a normal distribution
         Returns:
@@ -560,7 +575,7 @@ class NormalDist(_ContinuousDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>F(X = {}) = {:.5f}</b></span>".format(
-            x, pdf
+                x, pdf
             )
             fig = super()._highlight_pdf(fig, x, pdf, add_title)
             return fig
@@ -579,11 +594,11 @@ class NormalDist(_ContinuousDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>P(X < {}) = {:.5f}</b></span>".format(
-            x, cum_p
+                x, cum_p
             )
             fig = super()._highlight_cum_p(fig, x, cum_p, add_title)
             return fig
-        
+
     def _calc_x_limit(self):
         """Calculate the x-axis lower and upper limit for the distribution
         Returns:
@@ -641,7 +656,7 @@ class StudentsTDist(_ContinuousDist):
         self._df = new_df
         # Set the x and y values for the probability distribution
         super().__init__()
-        
+
     def plot_dist(self):
         """Plot the probability distribution for a Student's t distribution
         Returns:
@@ -667,7 +682,7 @@ class StudentsTDist(_ContinuousDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>F(X = {}) = {:.5f}</b></span>".format(
-            x, pdf
+                x, pdf
             )
             fig = super()._highlight_pdf(fig, x, pdf, add_title)
             return fig
@@ -686,7 +701,7 @@ class StudentsTDist(_ContinuousDist):
         elif plot == True:
             fig = self.plot_dist()
             add_title = ", <span style='color:#FF7F0E'><b>P(X < {}) = {:.5f}</b></span>".format(
-            x, cum_p
+                x, cum_p
             )
             fig = super()._highlight_cum_p(fig, x, cum_p, add_title)
             return fig
@@ -701,7 +716,7 @@ class StudentsTDist(_ContinuousDist):
         while self.calc_pdf(x, plot=False) > 0.001:
             x += 0.5
         return (-x, x)
-    
+
     def __repr__(self):
         """Returns the representation of the class
         Returns:
