@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
-Name: stats-viz
+Name: stats-visual
 Version: 1.0.0
 Summary: package to visualize various statistical distributions
 Author: Timotius Marselo
@@ -7,9 +7,9 @@ Author-email: timotiusmarselo@gmail.com
 Description-Content-Type: text/markdown
 License-File: license.txt
 
-# stats_viz package
+# stats_visual package
 
-This package can visualize various statistical distributions along with their probability mass or density function and cumulative probability.
+A python package to visualize various statistical distributions along with their probability mass or density function and cumulative probability.
 MIT License
 
 Copyright 2023 Timotius Marselo
