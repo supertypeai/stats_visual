@@ -15,7 +15,7 @@
 ```
 from stats_visual import distribution
 binom = distribution.BinomialDist(n=20, p=0.45)
-binom.calc_cum_p(k=12)
+binom.plot_cum_p(k=12)
 ```
 <img src="https://github.com/supertypeai/stats_visual/blob/master/images/binomial_cum_p.png" alt="drawing" width="800"/>
 
