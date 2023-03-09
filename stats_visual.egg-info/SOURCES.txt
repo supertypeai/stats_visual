@@ -3,6 +3,8 @@ README.md
 license.txt
 pyproject.toml
 setup.cfg
+./stats_visual/__init__.py
+./stats_visual/distribution.py
 stats_visual/__init__.py
 stats_visual/distribution.py
 stats_visual.egg-info/PKG-INFO
