@@ -4,12 +4,16 @@
 `stats_visual` is python package to visualize various statistical distributions. With this package, it's possible to generate distribution plots that include highlighted probability mass or density functions, as well as cumulative probabilities. The plots are produced using the Plotly library, which allows for an interactive user experience.
 
 ## Installation
-`!pip install stats-visual`
+```
+!pip install stats-visual
+```
 
 ## Requirements
-`numpy`  
-`plotly`  
-`scipy`  
+```
+numpy  
+plotly  
+scipy
+```
 
 ## Example Usage  
 ```
