@@ -454,7 +454,7 @@ class _ContinuousDist:
         return fig
 
     def plot_pdf(self, x: float, pdf: float, add_title: str):
-        """Highlight the probability density function at x
+        """Plot the distribution with the probability density function at x highlighted
         Args:
             x (float): value of x
             pdf (float): probability density function at x
@@ -485,7 +485,7 @@ class _ContinuousDist:
         pass
 
     def plot_cum_p(self, x: float, cum_p: float, add_title: str):
-        """Highlight the cumulative probability at x
+        """Plot the distribution with the cumulative probability at x highlighted
         Args:
             x (float): value of x
             cum_p (float): cumulative probability at x
