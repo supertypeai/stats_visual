@@ -87,10 +87,10 @@ class _DiscreteDist:
         # Plot the distribution
         fig = self.plot_dist()
         # Highlight the probability mass function at k by assigning orange color to the k-th bar
-        k_index = np.where(self._x_vals == k)[0]
-        colors = np.array(["#1F77B4"] * self._x_vals.shape[0])
+        k_index = np.argwhere(self._x_vals == k)
+        colors = np.array(["#1F77B4"] * len(self._x_vals))
         colors[k_index] = ["#FF7F0E"]
-        fig.data[0].marker.color = colors
+        fig.update_traces(marker_color=colors)
         # Edit the plot title
         fig.layout.title.text += ", <span style='color:#FF7F0E'><b>{}</b></span>".format(add_title)
         return fig
@@ -110,10 +110,10 @@ class _DiscreteDist:
         # Plot the distribution
         fig = self.plot_dist()
         # Highlight the cumulative probability at k by assigning orange color to the first k-th bars
-        k_index = np.where(self._x_vals <= k)[0]
-        colors = np.array(["#1F77B4"] * self._x_vals.shape[0])
+        k_index = np.argwhere(self._x_vals <= k)
+        colors = np.array(["#1F77B4"] * len(self._x_vals))
         colors[k_index] = ["#FF7F0E"]
-        fig.data[0].marker.color = colors
+        fig.update_traces(marker_color=colors)
         # Edit the plot title
         fig.layout.title.text +=  ", <span style='color:#FF7F0E'><b>{}</b></span>".format(add_title)
         return fig
@@ -441,6 +441,7 @@ class _ContinuousDist:
             labels={"x": "X", "y": "Probability Density"},
             title=title,
         )
+        # update the y-axis to start from 0
         fig.update_yaxes(rangemode="tozero")
         fig.update_traces(hovertemplate="F(X = %{x:.3f}) = %{y:.5f}<extra></extra>")
         return fig
