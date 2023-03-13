@@ -132,18 +132,9 @@ class BinomialDist(_DiscreteDist):
         Args:
             n (int): number of trials
             p (float): probability of success
-        Raises:
-            AssertionError: probability of success (p) must be between 0 and 1
-            AssertionError: number of trials (n) must be greater than 0
         """
-        if p < 0 or p > 1:
-            raise AssertionError("probability of success (p) must be between 0 and 1")
-        elif n <= 0:
-            raise AssertionError("number of trials (n) must be greater than 0")
-        self._n = n
-        self._p = p
-        # Set the x and y values for the probability distribution
-        super().__init__()
+        self.n = n
+        self.p = p
         
     def _calc_x_limit(self):
         """Calculate the x-axis upper limit for the distribution
@@ -190,7 +181,8 @@ class BinomialDist(_DiscreteDist):
             )
         self._n = new_n
         # Set the x and y values for the probability distribution
-        super().__init__()
+        if hasattr(self, '_p'):
+            super().__init__()
 
     @property
     def p(self):
@@ -214,7 +206,8 @@ class BinomialDist(_DiscreteDist):
             )
         self._p = new_p
         # Set the x and y values for the probability distribution
-        super().__init__()
+        if hasattr(self, '_n'):
+            super().__init__()
 
     def plot_dist(self):
         """Plot the probability distribution for a binomial distribution
@@ -278,17 +271,9 @@ class PoissonDist(_DiscreteDist):
         """Poisson distribution class for plotting probability distribution and calculating probability mass function/ cumulative probability
         Args:
             mu (int): mean number of occurences over a given interval
-        Raises:
-            AssertionError: the mean number of occurences over a given interval (mu) must be greater than 0
         """
-        if mu <= 0:
-            raise AssertionError(
-                "the mean number of occurences over a given interval (mu) must be greater than 0"
-            )
-        self._mu = mu
-        # Set the x and y values for the probability distribution
-        super().__init__()
-    
+        self.mu = mu
+        
     def _calc_x_limit(self):
         """Calculate the x-axis upper limit for the distribution
         Returns:
@@ -311,7 +296,7 @@ class PoissonDist(_DiscreteDist):
         """
         if k < 0:
             raise AssertionError(
-                "the number of occurences (k) should be greater than or equal to 0"
+                "the number of occurences (k) should be greater than or sequal to 0"
             )
         pmf = stats.poisson.pmf(k=k, mu=self._mu)
         return pmf
@@ -334,7 +319,7 @@ class PoissonDist(_DiscreteDist):
         """
         if new_mu <= 0:
             raise AssertionError(
-                "the new mean number of occurences over a given interval (new_mu)  must be greater than 0"
+                "the new mean number of occurences over a given interval (new_mu) must be greater than 0"
             )
         self._mu = new_mu
         # Set the x and y values for the probability distribution
@@ -504,16 +489,9 @@ class NormalDist(_ContinuousDist):
         Args:
             mu (float): mean of the distribution
             sigma (float): standard deviation of the distribution
-        
-        Raises:
-            AssertionError: the standard deviation must be greater than 0
         """
-        if sigma < 0:
-            raise AssertionError("the standard deviation must be greater than 0")
-        self._mu = mu
-        self._sigma = sigma
-        # Set the x and y values for the probability distribution
-        super().__init__()
+        self.mu = mu
+        self.sigma = sigma
         
     def _calc_x_limit(self):
         """Calculate the x-axis lower and upper limit for the distribution
@@ -551,7 +529,8 @@ class NormalDist(_ContinuousDist):
         """
         self._mu = new_mu
         # Set the x and y values for the probability distribution
-        super().__init__()
+        if hasattr(self, '_sigma'):
+            super().__init__()
 
     @property
     def sigma(self):
@@ -574,7 +553,8 @@ class NormalDist(_ContinuousDist):
             raise AssertionError("the new standard deviation must be greater than 0")
         self._sigma = new_sigma
         # Set the x and y values for the probability distribution
-        super().__init__()
+        if hasattr(self, '_mu'):
+            super().__init__()
 
     def plot_dist(self):
         """Plot the probability distribution for a normal distribution
@@ -632,14 +612,8 @@ class StudentsTDist(_ContinuousDist):
         """Student's t distribution class for plotting probability distribution and calculating probability density function/ cumulative probability
         Args:
             df (int): degree of freedom of the distribution
-        Raises:
-            AssertionError: the degree of freedom (df) must be greater than 0
         """
-        if df < 1:
-            raise AssertionError("the degree of freedom (df) must be greater than 0")
-        self._df = df
-        # Set the x and y values for the probability distribution
-        super().__init__()
+        self.df = df
         
     def _calc_x_limit(self):
         """Calculate the x-axis lower and upper limit for the distribution
